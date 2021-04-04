@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="12d906a17aee4b9a890b3102a5065fdf" Name="Diagram1">
+        <EntityTypeShape EntityType="GestionRectteModel.Ingredient" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionRectteModel.Ingredients_Recette" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionRectteModel.Recette" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionRectteModel.Theme" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="GestionRectteModel.FK_Ing_Rec_2" ManuallyRouted="false" />
+        <AssociationConnector Association="GestionRectteModel.FK_Ing_Rec" ManuallyRouted="false" />
+        <AssociationConnector Association="GestionRectteModel.FK_Recette_Theme" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

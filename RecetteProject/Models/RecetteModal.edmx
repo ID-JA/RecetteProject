@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GestionRectteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="NumIng" />
+          </Key>
+          <Property Name="NumIng" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomIng" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PUIng" Type="float" Nullable="false" />
+          <Property Name="UtineMesureIng" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredients_Recette">
+          <Key>
+            <PropertyRef Name="NumRec" />
+            <PropertyRef Name="NumIng" />
+          </Key>
+          <Property Name="NumRec" Type="int" Nullable="false" />
+          <Property Name="NumIng" Type="int" Nullable="false" />
+          <Property Name="QteUtilise" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recette">
+          <Key>
+            <PropertyRef Name="NumRecette" />
+          </Key>
+          <Property Name="NumRecette" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomRec" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateCreationRec" Type="date" Nullable="false" />
+          <Property Name="Difficulte" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TempsPreparation" Type="int" Nullable="false" />
+          <Property Name="MethodePreparation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Photo" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="CodeTheme" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="CodeTheme" />
+          </Key>
+          <Property Name="CodeTheme" Type="int" Nullable="false" />
+          <Property Name="NomTheme" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Ing_Rec">
+          <End Role="Recette" Type="Self.Recette" Multiplicity="1" />
+          <End Role="Ingredients_Recette" Type="Self.Ingredients_Recette" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recette">
+              <PropertyRef Name="NumRecette" />
+            </Principal>
+            <Dependent Role="Ingredients_Recette">
+              <PropertyRef Name="NumRec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ing_Rec_2">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Ingredients_Recette" Type="Self.Ingredients_Recette" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="NumIng" />
+            </Principal>
+            <Dependent Role="Ingredients_Recette">
+              <PropertyRef Name="NumIng" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recette_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Recette" Type="Self.Recette" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="CodeTheme" />
+            </Principal>
+            <Dependent Role="Recette">
+              <PropertyRef Name="CodeTheme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionRectteModelStoreContainer">
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredients_Recette" EntityType="Self.Ingredients_Recette" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recette" EntityType="Self.Recette" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Theme" EntityType="Self.Theme" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ing_Rec" Association="Self.FK_Ing_Rec">
+            <End Role="Recette" EntitySet="Recette" />
+            <End Role="Ingredients_Recette" EntitySet="Ingredients_Recette" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ing_Rec_2" Association="Self.FK_Ing_Rec_2">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="Ingredients_Recette" EntitySet="Ingredients_Recette" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recette_Theme" Association="Self.FK_Recette_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="Recette" EntitySet="Recette" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GestionRectteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="NumIng" />
+          </Key>
+          <Property Name="NumIng" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomIng" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PUIng" Type="Double" Nullable="false" />
+          <Property Name="UtineMesureIng" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ingredients_Recette" Relationship="Self.FK_Ing_Rec_2" FromRole="Ingredient" ToRole="Ingredients_Recette" />
+        </EntityType>
+        <EntityType Name="Ingredients_Recette">
+          <Key>
+            <PropertyRef Name="NumRec" />
+            <PropertyRef Name="NumIng" />
+          </Key>
+          <Property Name="NumRec" Type="Int32" Nullable="false" />
+          <Property Name="NumIng" Type="Int32" Nullable="false" />
+          <Property Name="QteUtilise" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.FK_Ing_Rec_2" FromRole="Ingredients_Recette" ToRole="Ingredient" />
+          <NavigationProperty Name="Recette" Relationship="Self.FK_Ing_Rec" FromRole="Ingredients_Recette" ToRole="Recette" />
+        </EntityType>
+        <EntityType Name="Recette">
+          <Key>
+            <PropertyRef Name="NumRecette" />
+          </Key>
+          <Property Name="NumRecette" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomRec" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreationRec" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Difficulte" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TempsPreparation" Type="Int32" Nullable="false" />
+          <Property Name="MethodePreparation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodeTheme" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ingredients_Recette" Relationship="Self.FK_Ing_Rec" FromRole="Recette" ToRole="Ingredients_Recette" />
+          <NavigationProperty Name="Theme" Relationship="Self.FK_Recette_Theme" FromRole="Recette" ToRole="Theme" />
+        </EntityType>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="CodeTheme" />
+          </Key>
+          <Property Name="CodeTheme" Type="Int32" Nullable="false" />
+          <Property Name="NomTheme" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Recettes" Relationship="Self.FK_Recette_Theme" FromRole="Theme" ToRole="Recette" />
+        </EntityType>
+        <Association Name="FK_Ing_Rec_2">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Ingredients_Recette" Type="Self.Ingredients_Recette" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="NumIng" />
+            </Principal>
+            <Dependent Role="Ingredients_Recette">
+              <PropertyRef Name="NumIng" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ing_Rec">
+          <End Role="Recette" Type="Self.Recette" Multiplicity="1" />
+          <End Role="Ingredients_Recette" Type="Self.Ingredients_Recette" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recette">
+              <PropertyRef Name="NumRecette" />
+            </Principal>
+            <Dependent Role="Ingredients_Recette">
+              <PropertyRef Name="NumRec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recette_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Recette" Type="Self.Recette" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="CodeTheme" />
+            </Principal>
+            <Dependent Role="Recette">
+              <PropertyRef Name="CodeTheme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionRectteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="Ingredients_Recette" EntityType="Self.Ingredients_Recette" />
+          <EntitySet Name="Recettes" EntityType="Self.Recette" />
+          <EntitySet Name="Themes" EntityType="Self.Theme" />
+          <AssociationSet Name="FK_Ing_Rec_2" Association="Self.FK_Ing_Rec_2">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="Ingredients_Recette" EntitySet="Ingredients_Recette" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ing_Rec" Association="Self.FK_Ing_Rec">
+            <End Role="Recette" EntitySet="Recettes" />
+            <End Role="Ingredients_Recette" EntitySet="Ingredients_Recette" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recette_Theme" Association="Self.FK_Recette_Theme">
+            <End Role="Theme" EntitySet="Themes" />
+            <End Role="Recette" EntitySet="Recettes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GestionRectteModelStoreContainer" CdmEntityContainer="GestionRectteEntities">
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="GestionRectteModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="NumIng" ColumnName="NumIng" />
+                <ScalarProperty Name="NomIng" ColumnName="NomIng" />
+                <ScalarProperty Name="PUIng" ColumnName="PUIng" />
+                <ScalarProperty Name="UtineMesureIng" ColumnName="UtineMesureIng" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients_Recette">
+            <EntityTypeMapping TypeName="GestionRectteModel.Ingredients_Recette">
+              <MappingFragment StoreEntitySet="Ingredients_Recette">
+                <ScalarProperty Name="NumRec" ColumnName="NumRec" />
+                <ScalarProperty Name="NumIng" ColumnName="NumIng" />
+                <ScalarProperty Name="QteUtilise" ColumnName="QteUtilise" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recettes">
+            <EntityTypeMapping TypeName="GestionRectteModel.Recette">
+              <MappingFragment StoreEntitySet="Recette">
+                <ScalarProperty Name="NumRecette" ColumnName="NumRecette" />
+                <ScalarProperty Name="NomRec" ColumnName="NomRec" />
+                <ScalarProperty Name="DateCreationRec" ColumnName="DateCreationRec" />
+                <ScalarProperty Name="Difficulte" ColumnName="Difficulte" />
+                <ScalarProperty Name="TempsPreparation" ColumnName="TempsPreparation" />
+                <ScalarProperty Name="MethodePreparation" ColumnName="MethodePreparation" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="CodeTheme" ColumnName="CodeTheme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Themes">
+            <EntityTypeMapping TypeName="GestionRectteModel.Theme">
+              <MappingFragment StoreEntitySet="Theme">
+                <ScalarProperty Name="CodeTheme" ColumnName="CodeTheme" />
+                <ScalarProperty Name="NomTheme" ColumnName="NomTheme" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
